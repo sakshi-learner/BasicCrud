@@ -11,10 +11,8 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
     public Student create(Student student){
-        System.out.println("Enter in service");
        Student repoStudent =studentRepository.save(student);
-        System.out.println("Exist from service");
-     return repoStudent;
+       return repoStudent;
 
     }
 }

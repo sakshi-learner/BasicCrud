@@ -1,8 +1,9 @@
 package org.example.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+
 
 @Entity
 @Data
@@ -10,6 +11,9 @@ public class Student {
     @Id
     private long id ;
     private String name;
-    private int rollno;
+    private String email;
+    private int rollNo;
     private int age;
+    private String subject;
+
 }
