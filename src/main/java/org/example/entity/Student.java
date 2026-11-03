@@ -18,5 +18,6 @@ public class Student {
     private int rollNo;
     private int age;
     private String subject;
+    private Boolean isDelete;
 
 }

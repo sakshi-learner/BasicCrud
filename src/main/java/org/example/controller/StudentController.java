@@ -20,12 +20,13 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody Student student){
+        student.setIsDelete(false);
        Student createdStudent =studentService.create(student);
         return ResponseEntity.status(201).body(createdStudent);
 
     }
-    @GetMapping("/get/{id}")
-    public  ResponseEntity<Student> getStudent(@PathVariable Long id){
+    @GetMapping("/get")
+    public  ResponseEntity<Student> getStudent(@RequestParam Long id){
         Student student =studentService.getStudent(id);
         if(student == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -42,8 +43,8 @@ public class StudentController {
         return   ResponseEntity.ok(studentList);
     }
 
-    @PutMapping("/update/{id}")
-    public  ResponseEntity<Student> updateStudent(@PathVariable Long id , @RequestBody Student studentReq){
+    @PutMapping("/update")
+    public  ResponseEntity<Student> updateStudent(@RequestParam Long id , @RequestBody Student studentReq){
         Student student =studentService.updateStudent(id,studentReq);
         if(student == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -53,9 +54,18 @@ public class StudentController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteStudent(@PathVariable Long id){
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteStudent(@RequestParam Long id){
         Boolean isDeleted = studentService.deleteStudent(id);
+        if(!isDeleted){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.FOUND).body("Permanantly Record Deleted !");
+    }
+
+    @PatchMapping("/soft-delete")
+    public ResponseEntity<String> softDelete(@RequestParam Long id){
+        Boolean isDeleted = studentService.deleteStudentSoftly(id);
         if(!isDeleted){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
